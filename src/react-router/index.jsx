@@ -56,6 +56,23 @@ export function useLocation() {
 }
 
 /**
+ * 通过自定的hook 拿到navigate
+ *
+ * @return {(function(*): void)|*}
+ */
+export function useNavigate() {
+  const { navigator } = React.useContext(NavigationContext);
+  const navigate = React.useCallback(
+    (to) => {
+      navigator.push(to);
+    },
+    [navigator],
+  );
+
+  return navigate;
+}
+
+/**
  * 自定义hook 通过该方法获取path上的 params
  *
  * @author lihh

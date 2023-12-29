@@ -1,5 +1,5 @@
 import React from "react";
-import { Router } from "@/react-router";
+import { Router, useNavigate } from "@/react-router";
 import { createHashHistory, createBrowserHistory } from "@/history";
 import { isNullOrUndefined } from "@/shared";
 
@@ -75,5 +75,29 @@ export function BrowserRouter({ children }) {
       navigator={history}
       navigationType={state.action}
     />
+  );
+}
+
+/**
+ * 编写 link组件
+ *
+ * @author lihh
+ * @param to 跳转的位置
+ * @param children 显示的子元素
+ * @return {JSX.Element}
+ * @constructor
+ */
+export function Link({ to, children }) {
+  const navigate = useNavigate();
+  return (
+    <a
+      href={to}
+      onClick={(event) => {
+        event.preventDefault();
+        navigate(to);
+      }}
+    >
+      {children}
+    </a>
   );
 }
