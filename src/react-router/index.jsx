@@ -111,24 +111,42 @@ export function useRoutes(routes) {
  * @param path 访问的path
  */
 function compilePath(path) {
-  let regexpSource = "^" + path;
+  // 此变量就是为了收集 path 后面的 [:参数]的
+  const paramNames = [];
+  let regexpSource =
+    "^" +
+    path.replace(/:(\w+)/g, (_, key) => {
+      // 好比 收集的是 :id 的值
+      paramNames.push(key);
+      // 替换为 包含分组的任意字符
+      return "([^\\/]+)";
+    });
   regexpSource += "$";
   const matcher = new RegExp(regexpSource);
-  return matcher;
+  return [matcher, paramNames];
 }
 
 /**
  * 匹配path
  *
  * @author lihh
- * @param path 访问的path
- * @param pathname 以及匹配的pathname
+ * @param path route中的path
+ * @param pathname 以及匹配的pathname 是location中的pathname
  */
 export function matchPath(path, pathname) {
-  const matcher = compilePath(path);
+  const [matcher, paramNames] = compilePath(path);
+  // 拿到分组的值
   const match = pathname.match(matcher);
   if (!match) return null;
-  return match;
+
+  const [matchedPathname, ...values] = match;
+  // 此时的变量【paramNames】 保存的是  包含key 的数组
+  // values 是解析的值  此值跟上述的内容 是一一对应起来的 其实就是所谓的{id: 100}等
+  const params = paramNames.reduce((memo, paramName, index) => {
+    memo[paramName] = values[index];
+    return memo;
+  }, {});
+  return { params, matchedPathname };
 }
 
 /**
