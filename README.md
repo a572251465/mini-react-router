@@ -7,7 +7,7 @@
 - [x] history 路由基本实现
 - [x] hash 路由的基本实现
 - [x] 核心API【history】的实现
-- [ ] 路径参数的实现
+- [x] 路径参数的实现
 - [ ] Link 导航
 - [ ] 实现嵌套路由
 - [ ] 实现NavLink
