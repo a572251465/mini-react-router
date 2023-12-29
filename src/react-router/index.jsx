@@ -94,6 +94,9 @@ export function useRoutes(routes) {
     const { path, element } = route;
 
     // 匹配到 path
+    // 此时的属性【pathname】 是当前window的location中访问的url
+    // 此时的属性【path】 是自定义标签的route的 path属性
+    // 通过匹配path 定位到某个组件
     const match = matchPath(path, pathname);
     if (match) return element;
   }

@@ -6,7 +6,7 @@
 
 - [x] history 路由基本实现
 - [x] hash 路由的基本实现
-- [ ] 核心API【history】的实现
+- [x] 核心API【history】的实现
 - [ ] 路径参数的实现
 - [ ] 路径参数
 - [ ] Link 导航

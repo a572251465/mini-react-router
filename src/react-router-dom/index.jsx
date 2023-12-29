@@ -1,6 +1,6 @@
 import React from "react";
 import { Router } from "@/react-router";
-import { createHashHistory, createBrowserHistory } from "history";
+import { createHashHistory, createBrowserHistory } from "@/history";
 import { isNullOrUndefined } from "@/shared";
 
 // 导出react-router
