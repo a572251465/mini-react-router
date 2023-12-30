@@ -2,6 +2,9 @@ import Home from "@/components/Home";
 import User from "@/components/User";
 import Profile from "@/components/Profile";
 import Post from "@/components/Post";
+import UserAdd from "./components/UserAdd";
+import UserList from "./components/UserList";
+import UserDetail from "./components/UserDetail";
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
@@ -9,7 +12,7 @@ import {
   Routes,
   HashRouter,
   Link,
-} from "@/react-router-dom";
+} from "react-router-dom";
 function App() {
   return (
     <HashRouter>
@@ -18,7 +21,7 @@ function App() {
           <Link to="/">首页</Link>
         </li>
         <li>
-          <Link to="/user">用户管理</Link>
+          <Link to="/user">用户管理</Link>?
         </li>
         <li>
           <Link to="/profile">个人中心</Link>
@@ -26,7 +29,11 @@ function App() {
       </ul>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user" element={<User />}>
+          <Route path="add" element={<UserAdd />} />
+          <Route path="list" element={<UserList />} />
+          <Route path="detail/:id" element={<UserDetail />} />
+        </Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/post/:id" element={<Post />} />
       </Routes>
