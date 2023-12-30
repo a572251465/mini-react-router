@@ -137,9 +137,5 @@ export function createHashHistory() {
     goForward,
     push,
     listen,
-    location: {
-      pathname: undefined,
-      state: undefined,
-    },
   });
 }
