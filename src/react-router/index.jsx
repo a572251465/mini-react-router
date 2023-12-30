@@ -304,6 +304,9 @@ function compilePath(path, end) {
 
   // 是否匹配到最后
   if (end) regexpSource += "\\/*$";
+
+  // 针对* 做一个特殊的处理
+  if (path === "*") regexpSource = ".*";
   const matcher = new RegExp(regexpSource);
   return [matcher, paramNames];
 }
@@ -391,4 +394,19 @@ export function createRoutesFromChildren(children) {
   });
 
   return routes;
+}
+
+/**
+ * 导出一个重定向的组件
+ *
+ * @author lihh
+ * @param to 到哪里去
+ * @constructor
+ */
+export function Navigate({ to }) {
+  const navigate = useNavigate();
+  React.useLayoutEffect(() => {
+    navigate(to);
+  }, []);
+  return null;
 }

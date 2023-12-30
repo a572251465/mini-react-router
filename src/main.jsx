@@ -13,6 +13,7 @@ import {
   HashRouter,
   Link,
   NavLink,
+  Navigate,
 } from "@/react-router-dom";
 
 const activeStyle = { backgroundColor: "green" };
@@ -51,6 +52,7 @@ function App() {
         </Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/post/:id" element={<Post />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </HashRouter>
   );
