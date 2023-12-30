@@ -12,34 +12,19 @@ import {
   Routes,
   HashRouter,
   Link,
-  NavLink,
 } from "@/react-router-dom";
-
-const activeStyle = { backgroundColor: "green" };
-const activeClassName = "active";
-const activeNavProps = {
-  style: ({ isActive }) => (isActive ? activeStyle : {}),
-  className: ({ isActive }) => (isActive ? activeClassName : ""),
-};
-
 function App() {
   return (
     <HashRouter>
       <ul>
         <li>
-          <NavLink end={true} to="/" {...activeNavProps}>
-            首页
-          </NavLink>
+          <Link to="/">首页</Link>
         </li>
         <li>
-          <NavLink to="/user" {...activeNavProps}>
-            用户管理
-          </NavLink>
+          <Link to="/user">用户管理</Link>?
         </li>
         <li>
-          <NavLink to="/profile" {...activeNavProps}>
-            个人中心
-          </NavLink>
+          <Link to="/profile">个人中心</Link>
         </li>
       </ul>
       <Routes>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, useNavigate } from "@/react-router";
+import { Router, useLocation, useNavigate } from "@/react-router";
 import { createHashHistory, createBrowserHistory } from "@/history";
 import { isNullOrUndefined } from "@/shared";
 
@@ -87,10 +87,11 @@ export function BrowserRouter({ children }) {
  * @return {JSX.Element}
  * @constructor
  */
-export function Link({ to, children }) {
+export function Link({ to, children, ...rest }) {
   const navigate = useNavigate();
   return (
     <a
+      {...rest}
       href={to}
       onClick={(event) => {
         event.preventDefault();
@@ -99,5 +100,54 @@ export function Link({ to, children }) {
     >
       {children}
     </a>
+  );
+}
+
+/**
+ * 实现NavLink 导航，其实就是有选中状态的导航
+ *
+ * @author lihh
+ * @param classNameProp className 样式
+ * @param end 是否要匹配到结束
+ * @param styleProp style 样式属性
+ * @param to 要跳转到哪里去
+ * @param children 子类
+ * @param rest 其余的参数
+ * @constructor
+ */
+export function NavLink({
+  className: classNameProp,
+  end = false,
+  style: styleProp = {},
+  to,
+  children,
+  ...rest
+}) {
+  // 拿到此时路由信息
+  const location = useLocation();
+  // 设置要跳转到的位置
+  const path = { pathname: to };
+
+  // 此时浏览器的 对应的path
+  const locationPathname = location.pathname;
+  const toPathname = path.pathname;
+
+  // 意味着什么是激活状态. 1. 完全匹配的状态肯定是激活的状态 2. 不需要完全匹配，但是匹配前缀时，匹配结束后一定后面跟着一个/ 符号
+  const isActive =
+    locationPathname === toPathname ||
+    (!end &&
+      locationPathname.startsWith(toPathname) &&
+      locationPathname.charAt(toPathname.length) === "/");
+
+  let className;
+  if (typeof classNameProp === "function")
+    className = classNameProp({ isActive });
+  let style;
+  if (typeof styleProp === "function") style = styleProp({ isActive });
+
+  return (
+    <Link to={to} className={className} style={style} {...rest}>
+      {children}
+    </Link>
   );
 }
